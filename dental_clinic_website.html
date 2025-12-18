@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Стоматологическая клиника</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+
+      /* ===== Doctors Slider ===== */
+.doctors-slider {
+  position: relative;
+ 
+}
+
+.doctors-track {
+  display: flex;
+  gap: 30px;
+  transition: transform 0.6s ease;
+}
+
+/* карточки фиксированной ширины */
+.doctors-track .card {
+  min-width: 300px;
+  flex-shrink: 0;
+}
+
+/* кнопки */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+
+.slider-btn.prev { left: -10px; }
+.slider-btn.next { right: -10px; }
+
+.slider-btn:hover {
+  background: #1e40af;
+}
+
+/* мобильные */
+@media (max-width: 768px) {
+  .doctors-track .card {
+    min-width: 260px;
+  }
+}
+
+      html {
+  scroll-behavior: smooth;
+}
+    :root {
+      --main-color:#2563eb;      /* насыщенный синий */
+      --accent-color:#22c55e;    /* мягкий зелёный */
+      --bg-light:#f4f7fb;
+      --bg-gradient:linear-gradient(135deg,#2563eb,#1e40af);
+      --text-dark:#0f172a;
+      --card-shadow:0 20px 40px rgba(0,0,0,.08);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Inter",Arial,Helvetica,sans-serif;
+      color:var(--text-dark);
+      line-height:1.6;
+      background:#fff;
+    }
+
+    .container{width:100%;max-width:1200px;margin:0 auto}
+
+    /* HEADER */
+    .header{
+      background:rgba(255,255,255,.95);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid #e5e7eb;
+      position:sticky;top:0;z-index:10
+    }
+    .header .container{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:13px 0
+    }
+    .logo{height:42px}
+    .nav a{
+      margin:0 14px;text-decoration:none;color:#334155;
+      font-weight:500;position:relative
+    }
+    .nav a::after{
+      content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;
+      background:var(--main-color);transition:.3s
+    }
+    .nav a:hover::after{width:100%}
+
+    .btn{
+      background:var(--bg-gradient);
+      color:#fff;padding:12px 22px;border-radius:999px;
+      text-decoration:none;display:inline-block;
+      box-shadow:0 10px 20px rgba(37,99,235,.35);
+      transition:.3s
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(37,99,235,.45)}
+
+    /* HERO */
+    .hero{
+      background:
+        linear-gradient(rgba(15,23,42,.6),rgba(15,23,42,.6)),
+        url('assets/img/hero.jpg') center/cover no-repeat;
+      color:#fff;padding:120px 0;text-align:center
+    }
+    .hero h1{
+      font-size:48px;max-width:800px;margin:0 auto 20px
+    }
+    .hero p{
+      font-size:20px;opacity:.9;margin-bottom:30px
+    }
+
+    /* SECTIONS */
+    .section {
+  padding: 90px 0;
+  scroll-margin-top: 110px; /* высота header + запас */
+}
+
+    .section.light{background:var(--bg-light)}
+    h2{text-align:center;margin-bottom:50px;font-size:36px}
+
+    /* CARDS */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px}
+    .card{
+      background:#fff;border-radius:20px;padding:25px;text-align:center;
+      box-shadow:var(--card-shadow);transition:.35s
+    }
+    .card:hover{transform:translateY(-6px)}
+    .card img{width:100%;border-radius:16px;margin-bottom:18px}
+    /* Ограничение фото врачей (чтобы не были огромными) */
+.doctors-track .card img {
+  width: 100%;
+  height: 330px;        /* ← ВАЖНО */
+  object-fit: cover;   /* аккуратная обрезка */
+  border-radius: 16px;
+}
+
+    .card h3{font-size:22px;margin-bottom:10px}
+
+    /* ADVANTAGES */
+    .advantages{max-width:650px;margin:0 auto;list-style:none}
+    .advantages li{
+      padding:14px 0;font-size:18px;display:flex;gap:12px;align-items:center
+    }
+    .advantages li::before{content:"✔";color:var(--accent-color);font-weight:bold}
+
+    /* FORM */
+    .form{
+      max-width:420px;margin:0 auto;
+      display:flex;flex-direction:column;gap:16px
+    }
+    .form input{
+      padding:14px;border-radius:14px;border:1px solid #d1d5db;
+      font-size:16px
+    }
+
+    /* MAP */
+    iframe{width:100%;height:320px;border:0;border-radius:20px;margin-top:25px}
+
+    /* FOOTER */
+    .footer{background:#020617;color:#cbd5f5;text-align:center;padding:30px 0}
+
+    /* MOBILE */
+    @media(max-width:768px){
+      .hero h1{font-size:32px}
+      .hero p{font-size:18px}
+      .nav{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <img src="assets/img/logo.svg" alt="Логотип" class="logo" />
+    <nav class="nav">
+      <a href="#services">Услуги</a>
+      <a href="#advantages">Преимущества</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="#form" class="btn">Записаться</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Имплантация зубов без боли</h1>
+    <p>Современные технологии и гарантия результата</p>
+    <a href="#form" class="btn">Бесплатная консультация</a>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <div class="container">
+    <h2>Наши услуги</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="assets/img/service-1.jpg" alt="Имплантация" />
+        <h3>Имплантация</h3>
+        <p>Надёжное восстановление зубов</p>
+      </div>
+      <div class="card">
+        <img src="assets/img/service-2.jpg" alt="Лечение" />
+        <h3>Лечение</h3>
+        <p>Безболезненно и эффективно</p>
+      </div>
+      <div class="card">
+        <img src="assets/img/service-3.jpg" alt="Протезирование" />
+        <h3>Протезирование</h3>
+        <p>Эстетика и комфорт</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="doctors" class="section">
+  <div class="container">
+    <h2>Наши врачи</h2>
+
+    <!-- Обёртка слайдера -->
+    <div class="doctors-slider">
+
+      <!-- Лента, которая будет двигаться -->
+      <div class="doctors-track">
+        <div class="card">
+          <img src="assets/img/doctor-1.jpg" alt="Врач-имплантолог" />
+          <h3>Тілепбай Рахимұлы</h3>
+          <p>Врач-имплантолог<br>Стаж: 12 лет</p>
+        </div>
+
+        <div class="card">
+          <img src="assets/img/doctor-2.jpg" alt="Врач стоматолог" />
+          <h3>Гаухар Абзалқызы</h3>
+          <p>Терапевт-ортопед<br>Стаж: 9 лет</p>
+        </div>
+
+        <div class="card">
+          <img src="assets/img/doctor-3.jpg" alt="Врач стоматолог" />
+          <h3>Самуил Жамбылұлы</h3>
+          <p>Ортодонт<br>Стаж: 7 лет</p>
+        </div>
+        <div class="card">
+          <img src="assets/img/doctor-4.jpg" alt="Врач стоматолог" />
+          <h3>Нұржау Тілепбердіұлы</h3>
+          <p>Ортодонт<br>Стаж: 7 лет</p>
+        </div>
+
+        <!-- ➕ сюда просто добавляешь новых врачей -->
+      </div>
+
+      <!-- Кнопки -->
+      <button class="slider-btn prev">‹</button>
+      <button class="slider-btn next">›</button>
+
+    </div>
+  </div>
+</section>
+
+
+<section id="advantages" class="section light">
+  <div class="container">
+    <h2>Почему выбирают нас</h2>
+    <ul class="advantages">
+      <li>✔ Современное оборудование</li>
+      <li>✔ Опытные врачи</li>
+      <li>✔ Прозрачные цены</li>
+      <li>✔ Гарантия на работы</li>
+    </ul>
+  </div>
+</section>
+
+<section id="form" class="section">
+  <div class="container">
+    <h2>Записаться на консультацию</h2>
+    <form class="form">
+      <input type="text" placeholder="Ваше имя" required />
+      <input type="tel" placeholder="Телефон" required />
+      <button type="submit" class="btn">Отправить</button>
+    </form>
+  </div>
+</section>
+
+<section id="reviews" class="section light">
+  <div class="container">
+    <h2>Отзывы пациентов</h2>
+    <div class="grid">
+      <div class="card">
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>Очень довольна лечением. Врачи внимательные, всё прошло без боли.</p>
+        <strong>Айгуль К.</strong>
+      </div>
+      <div class="card">
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>Делал имплантацию — результат превзошёл ожидания. Рекомендую.</p>
+        <strong>Марат С.</strong>
+      </div>
+      <div class="card">
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>Современная клиника, чисто и профессионально. Спасибо персоналу!</p>
+        <strong>Елена Т.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prices" class="section">
+  <div class="container">
+    <h2>Цены на услуги</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Имплантация зуба</h3>
+        <p>Под ключ</p>
+        <strong>от 180 000 ₸</strong>
+      </div>
+      <div class="card">
+        <h3>Лечение кариеса</h3>
+        <p>Современные материалы</p>
+        <strong>от 25 000 ₸</strong>
+      </div>
+      <div class="card">
+        <h3>Протезирование</h3>
+        <p>Коронки и виниры</p>
+        <strong>от 90 000 ₸</strong>
+      </div>
+      <div class="card">
+        <h3>Профессиональная чистка</h3>
+        <p>Air Flow + ультразвук</p>
+        <strong>от 20 000 ₸</strong>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:30px;opacity:.7">Точная стоимость определяется после консультации врача</p>
+  </div>
+</section>
+
+<section id="contacts" class="section light">
+  <div class="container">
+    <h2>Контакты</h2>
+    <p>г. Актау, 17 мкр, 83 дом, Assem Dental Clinic </p>
+    <p>Телефон: +77753041999</p>
+    <iframe
+  src="https://www.google.com/maps?q=43.671534196673505,51.14166655199165&z=18&output=embed"
+  loading="lazy">
+</iframe>
+  </div>
+</section>
+43.671534196673505, 51.14166655199165
+<footer class="footer">
+  <div class="container">
+    <p>© 2025 Assed Dental Clinic</p>
+  </div>
+</footer>
+
+<script>
+const SITE = {
+  clinicName: "Assem Dental Clinic",
+  phone: "+77753041999",
+  address: "г. Актау, 17 мкр, 83 дом, Assem Dental Clinic"
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector('.form');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = form.querySelector("input[type='text']").value;
+    const phone = form.querySelector("input[type='tel']").value;
+    const text = 'Здравствуйте.%0AПрошу записать меня на приём.%0AИмя: ' + name + '%0AТелефон: ' + phone;
+    const wa = SITE.phone.replace(/[^0-9]/g, '');
+    const url = 'https://wa.me/' + wa + '?text=' + text;
+    window.open(url, '_blank');
+  });
+});
+
+// ===== Doctors slider logic =====
+const track = document.querySelector('.doctors-track');
+const prevBtn = document.querySelector('.slider-btn.prev');
+const nextBtn = document.querySelector('.slider-btn.next');
+
+let index = 0;
+
+// ширина одной карточки + gap
+function getCardWidth() {
+  const card = track.querySelector('.card');
+  const gap = 30;
+  return card.offsetWidth + gap;
+}
+
+nextBtn.addEventListener('click', () => {
+  const maxIndex = track.children.length - 1;
+  if (index < maxIndex) {
+    index++;
+    track.style.transform = `translateX(-${index * getCardWidth()}px)`;
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  if (index > 0) {
+    index--;
+    track.style.transform = `translateX(-${index * getCardWidth()}px)`;
+  }
+});
+
+</script>
+</body>
+</html>
